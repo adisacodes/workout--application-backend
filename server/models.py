@@ -26,3 +26,20 @@ class Exercise(db.Model):
 
     def __repr__(self):
         return f'<Exercise {self.id}: {self.name}>'
+    
+    class Workout(db.Model):
+        __tablename__ = 'workouts'
+        
+        id = db.Column(db.Integer, primary_key=True)
+        date = db.Column(db.Date, nullable=False)
+        duration_minutes = db.Column(db.Integer)
+        notes = db.Column(db.Text)
+
+        @validates('duration_minutes')
+        def validate_duration(self, key, value):
+            if value is not None and value <= 0:
+                raise ValueError("Duration must be a positive number.")
+            return value
+
+        def __repr__(self):
+            return f'<Workout {self.id} on {self.date}>'
