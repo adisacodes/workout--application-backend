@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
+from sqlalchemy import CheckConstraint
 
 db = SQLAlchemy()
 
@@ -44,6 +45,10 @@ class Workout(db.Model):
     duration_minutes = db.Column(db.Integer)
     notes = db.Column(db.Text)
 
+    __table_args__ = (
+        CheckConstraint('duration_minutes > 0', name='check_duration_positive'),
+    )
+
     workout_exercises = db.relationship(
         'WorkoutExercise', back_populates='workout', cascade='all, delete-orphan'
     )
@@ -70,6 +75,11 @@ class WorkoutExercise(db.Model):
     reps = db.Column(db.Integer)
     sets = db.Column(db.Integer)
     duration_seconds = db.Column(db.Integer)
+
+    __table_args__ = (
+        CheckConstraint('reps >= 0', name='check_reps_nonnegative'),
+        CheckConstraint('sets >= 0', name='check_sets_nonnegative'),
+    )
 
     workout = db.relationship('Workout', back_populates='workout_exercises')
     exercise = db.relationship('Exercise', back_populates='workout_exercises')
