@@ -11,6 +11,8 @@ migrate = Migrate(app, db)
 
 db.init_app(app)
 
+from schemas import ma
+
 
 # ---------- Workouts ----------
 
