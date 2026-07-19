@@ -15,7 +15,7 @@ db.init_app(app)
 ma.init_app(app)
 
 
-# ---------- Workouts ----------
+
 
 @app.route('/workouts', methods=['GET'])
 def get_workouts():
@@ -63,7 +63,7 @@ def delete_workout(id):
     return jsonify({}), 204
 
 
-# ---------- Exercises ----------
+
 
 @app.route('/exercises', methods=['GET'])
 def get_exercises():
@@ -111,7 +111,7 @@ def delete_exercise(id):
     return jsonify({}), 204
 
 
-# ---------- Workout <-> Exercise linking ----------
+
 
 @app.route('/workouts/<int:workout_id>/exercises/<int:exercise_id>/workout_exercises', methods=['POST'])
 def add_exercise_to_workout(workout_id, exercise_id):
